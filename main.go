@@ -24,6 +24,7 @@ type cliCommand struct {
 
 func commandExit(area_name string) error {
 	if area_name == "" || area_name != "" {
+		fmt.Println("Bye now!")
 		os.Exit(0)
 		return nil
 	}
@@ -80,8 +81,8 @@ func commandPokedex(area_name string) error {
 
 func commandHelp(area_name string) error {
 	if area_name == "" {
-		fmt.Println("\nWelcome to the Pokedex!")
-		fmt.Print("Usage:\n\n")
+		fmt.Println("\nWelcome to the Pokedex help menu!")
+		fmt.Print("\nUsage:\n")
 
 		display := map[string]cliCommand{
 			"help": {
@@ -138,6 +139,8 @@ func main() {
 	pokecache.InitGlobalCache()
 	pokedex.InitGlobalDex()
 	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Print("Welcome to the Pokedex-CLI! (type 'help' for more information)\n\n")
 
 	for {
 		fmt.Print("Pokedex > ")
