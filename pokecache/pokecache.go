@@ -36,13 +36,13 @@ func GetGlobalCache() *Cache {
 
 // This function creates a new cache for the request data
 func NewCache(interval time.Duration) *Cache {
-	newCache := Cache{
+	newCache := &Cache{
 		data:            make(map[string]cacheEntry),
 		defaultDuration: interval,
 		mu:              new(sync.Mutex),
 	}
 	go newCache.reapLoop()
-	return &newCache
+	return newCache
 }
 
 // Adds a new cached entry to the cache with the key as the url and
