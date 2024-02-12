@@ -8,8 +8,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/zajicekn/pokedexcli/pokecache"
-	"github.com/zajicekn/pokedexcli/pokestructs"
+	"github.com/zajicekn/Pokedex-CLI/pokecache"
+	"github.com/zajicekn/Pokedex-CLI/pokestructs"
 )
 
 func GetLocationMap(area *pokestructs.Config) (*pokestructs.ShallowLocation, error) {

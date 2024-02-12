@@ -3,7 +3,7 @@ package pokedex
 import (
 	"sync"
 
-	"github.com/zajicekn/pokedexcli/pokestructs"
+	"github.com/zajicekn/Pokedex-CLI/pokestructs"
 )
 
 type Pokedex struct {

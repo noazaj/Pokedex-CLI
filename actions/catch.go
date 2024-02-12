@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/zajicekn/pokedexcli/pokestructs"
+	"github.com/zajicekn/Pokedex-CLI/pokestructs"
 )
 
 func GetPokemon(area *pokestructs.Config) (*pokestructs.ShallowPokemon, error) {

@@ -5,10 +5,10 @@ import (
 	"log"
 	"math/rand"
 
-	"github.com/zajicekn/pokedexcli/actions"
-	"github.com/zajicekn/pokedexcli/locations"
-	"github.com/zajicekn/pokedexcli/pokedex"
-	"github.com/zajicekn/pokedexcli/pokestructs"
+	"github.com/zajicekn/Pokedex-CLI/actions"
+	"github.com/zajicekn/Pokedex-CLI/locations"
+	"github.com/zajicekn/Pokedex-CLI/pokedex"
+	"github.com/zajicekn/Pokedex-CLI/pokestructs"
 )
 
 func Map(area *pokestructs.Config) error {

@@ -3,7 +3,7 @@ package actions
 import (
 	"errors"
 
-	"github.com/zajicekn/pokedexcli/pokedex"
+	"github.com/zajicekn/Pokedex-CLI/pokedex"
 )
 
 func InspectPokemon(name string) (*pokedex.Pokedex, error) {
