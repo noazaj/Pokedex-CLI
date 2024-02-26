@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/fatih/color"
 	"github.com/zajicekn/Pokedex-CLI/pokeAPI"
 	"github.com/zajicekn/Pokedex-CLI/pokecache"
 	"github.com/zajicekn/Pokedex-CLI/pokedex"
@@ -81,47 +82,49 @@ func commandPokedex(area_name string) error {
 
 func commandHelp(area_name string) error {
 	if area_name == "" {
+		color.Set(color.FgHiYellow)
 		fmt.Println("\nWelcome to the Pokedex help menu!")
-		fmt.Print("\nUsage:\n")
+		fmt.Print("Commands are listed below\n\n")
+		color.Unset()
 
 		display := map[string]cliCommand{
 			"help": {
-				name:        "help",
+				name:        color.HiYellowString("help"),
 				description: "Displays a help message",
 				callback:    commandHelp,
 			},
 			"exit": {
-				name:        "exit",
+				name:        color.HiYellowString("exit"),
 				description: "Exit the Pokedex",
 				callback:    commandExit,
 			},
 			"map": {
-				name:        "map",
+				name:        color.HiYellowString("map"),
 				description: "Displays the location names of 20 different areas in the Pokemon world",
 				callback:    commandMap,
 			},
 			"mapb": {
-				name:        "mapb",
+				name:        color.HiYellowString("mapb"),
 				description: "Displays the previous names of the 20 different areas in the Pokemon world",
 				callback:    commandMapb,
 			},
 			"explore": {
-				name:        "explore",
+				name:        color.HiYellowString("explore"),
 				description: "Explores an area and presents the Pokemon in that area",
 				callback:    commandExplore,
 			},
 			"catch": {
-				name:        "catch",
+				name:        color.HiYellowString("catch"),
 				description: "Catches a pokemon",
 				callback:    commandCatch,
 			},
 			"inspect": {
-				name:        "inspect",
+				name:        color.HiYellowString("inspect"),
 				description: "Inspects a pokemon and its stats",
 				callback:    commandInspect,
 			},
 			"pokedex": {
-				name:        "pokedex",
+				name:        color.HiYellowString("pokedex"),
 				description: "Displays the names of pokemon in your pokedex",
 				callback:    commandPokedex,
 			},
@@ -140,10 +143,12 @@ func main() {
 	pokedex.InitGlobalDex()
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Print("Welcome to the Pokedex-CLI! (type 'help' for more information)\n\n")
+	fmt.Print("\nWelcome to the Pokedex-CLI! (type 'help' for more information)\n\n")
 
 	for {
+		color.Set(color.FgCyan)
 		fmt.Print("Pokedex > ")
+		color.Unset()
 
 		input, err := reader.ReadString('\n')
 		if err != nil {

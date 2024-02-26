@@ -2,7 +2,6 @@ package locations
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -80,10 +79,11 @@ func GetLocationMapb(area *pokestructs.Config) (*pokestructs.ShallowLocation, er
 
 	// Determine the URL to use for the request
 	var url string
-	if *area.Previous != "" {
+	if area.Previous != nil && *area.Previous != "" {
 		url = *area.Previous
 	} else {
-		return &pokestructs.ShallowLocation{}, errors.New("error: no previous url")
+		log.Println("Warning: no previous URL found")
+		return nil, nil
 	}
 
 	// Check to see if the URL is in the cache
@@ -106,7 +106,8 @@ func GetLocationMapb(area *pokestructs.Config) (*pokestructs.ShallowLocation, er
 	// Make the HTTP request
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatal("Request Error: ", err)
+		log.Println("Request Error: ", err)
+		return nil, nil
 	}
 	defer resp.Body.Close()
 

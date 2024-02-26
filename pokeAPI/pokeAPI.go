@@ -32,7 +32,8 @@ func Map(area *pokestructs.Config) error {
 func Mapb(area *pokestructs.Config) error {
 	locationJSON, err := locations.GetLocationMapb(area)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Error: %s", err)
+		return err
 	}
 
 	// Update config with new pagination URLs
