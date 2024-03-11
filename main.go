@@ -72,6 +72,14 @@ func commandInspect(area_name string) error {
 	return errors.New("inspect should have an argument")
 }
 
+func commandMoves(area_name string) error {
+	if area_name == "" {
+		pokeAPI.Moves(&globalConfig, area_name)
+		return nil
+	}
+	return errors.New("moves should have an argument")
+}
+
 func commandPokedex(area_name string) error {
 	if area_name == "" {
 		pokeAPI.Pokedex()
@@ -123,6 +131,11 @@ func commandHelp(area_name string) error {
 				description: "Inspects a pokemon and its stats",
 				callback:    commandInspect,
 			},
+			"moves": {
+				name:        color.HiYellowString("moves"),
+				description: "Displays the moves for a certain pokemon",
+				callback:    commandMoves,
+			},
 			"pokedex": {
 				name:        color.HiYellowString("pokedex"),
 				description: "Displays the names of pokemon in your pokedex",
@@ -144,6 +157,8 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("\nWelcome to the Pokedex-CLI! (type 'help' for more information)\n\n")
+
+	commandMoves("")
 
 	for {
 		color.Set(color.FgCyan)
@@ -173,17 +188,22 @@ func main() {
 			commandMapb("")
 		case splitArgs[0] == "explore":
 			if len(splitArgs) < 2 {
-				log.Fatal("Need to have an argument for 'explore'")
+				log.Print("Need to have an argument for 'explore'")
 			}
 			commandExplore(splitArgs[1])
 		case splitArgs[0] == "catch":
 			if len(splitArgs) < 2 {
-				log.Fatal("Need to have an argument for 'catch'")
+				log.Print("Need to have an argument for 'catch'")
 			}
 			commandCatch(strings.ToLower(splitArgs[1]))
+		case splitArgs[0] == "moves":
+			if len(splitArgs) < 2 {
+				log.Print("Need to have an argument for 'moves'")
+			}
+			commandMoves(strings.ToLower(splitArgs[1]))
 		case splitArgs[0] == "inspect":
 			if len(splitArgs) < 2 {
-				log.Fatal("Need to have an argument for 'inspect'")
+				log.Print("Need to have an argument for 'inspect'")
 			}
 			commandInspect(strings.ToLower(splitArgs[1]))
 		case splitArgs[0] == "pokedex":

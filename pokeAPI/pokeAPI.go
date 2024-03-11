@@ -1,15 +1,22 @@
 package pokeAPI
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"math/rand"
+	"net/http"
 
 	"github.com/zajicekn/Pokedex-CLI/actions"
 	"github.com/zajicekn/Pokedex-CLI/locations"
 	"github.com/zajicekn/Pokedex-CLI/pokedex"
 	"github.com/zajicekn/Pokedex-CLI/pokestructs"
 )
+
+type PokemonMoves struct {
+	Moves []string `json:"moves"`
+}
 
 func Map(area *pokestructs.Config) error {
 	// Call GetLocationMap to make request
@@ -109,6 +116,52 @@ func Inspect(name string) error {
 		fmt.Printf("    -%s\n", pokemon.Type.Name)
 	}
 
+	return nil
+}
+
+func Moves(area *pokestructs.Config, name string) error {
+	// Create pokedex instance
+	dex := pokedex.GetGlobalDex()
+
+	if len(dex.Data) == 0 {
+		fmt.Println("No pokemon in your pokedex to see its moves")
+		return nil
+	}
+
+	url := fmt.Sprintf("https://cs361-get-json-key-micro-0d1965251b55.herokuapp.com/pokemon/%s", name)
+	response, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	defer response.Body.Close()
+
+	respData, err := io.ReadAll(response.Body)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	var pokemonMoves PokemonMoves
+	err = json.Unmarshal(respData, &pokemonMoves)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	_, ok := dex.Data[name]
+	if !ok {
+		fmt.Println("That Pokemon is not in your Pokedex.")
+		return nil
+	}
+
+	for i, move := range pokemonMoves.Moves {
+		if i == 10 {
+			break
+		}
+		fmt.Printf("%s Moves:\n", name)
+		fmt.Printf("	-%s\n", move)
+	}
 	return nil
 }
 
