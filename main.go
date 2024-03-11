@@ -73,8 +73,8 @@ func commandInspect(area_name string) error {
 }
 
 func commandMoves(area_name string) error {
-	if area_name == "" {
-		pokeAPI.Moves(&globalConfig, area_name)
+	if area_name != "" {
+		pokeAPI.Moves(area_name)
 		return nil
 	}
 	return errors.New("moves should have an argument")
@@ -158,7 +158,9 @@ func main() {
 
 	fmt.Print("\nWelcome to the Pokedex-CLI! (type 'help' for more information)\n\n")
 
-	commandMoves("")
+	pokeAPI.Catch(&globalConfig, "pikachu")
+	pokeAPI.Moves("ditto")
+	pokeAPI.Moves("pikachu")
 
 	for {
 		color.Set(color.FgCyan)
