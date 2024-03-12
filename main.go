@@ -158,10 +158,6 @@ func main() {
 
 	fmt.Print("\nWelcome to the Pokedex-CLI! (type 'help' for more information)\n\n")
 
-	pokeAPI.Catch(&globalConfig, "pikachu")
-	pokeAPI.Moves("ditto")
-	pokeAPI.Moves("pikachu")
-
 	for {
 		color.Set(color.FgCyan)
 		fmt.Print("Pokedex > ")
