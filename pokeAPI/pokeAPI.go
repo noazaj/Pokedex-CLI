@@ -1,9 +1,12 @@
 package pokeAPI
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"math/rand"
+	"os"
+	"strings"
 
 	"github.com/zajicekn/Pokedex-CLI/actions"
 	"github.com/zajicekn/Pokedex-CLI/locations"
@@ -123,12 +126,29 @@ func Moves(name string) error {
 		fmt.Println("\tNo moves available for this Pokemon.")
 	}
 
-	fmt.Printf("%s Moves:", name)
-	for i, move := range pokemonMoves {
-		if i > 10 {
-			break
+	fmt.Printf("%s Moves:\n", name)
+	j := 0
+	for i := range pokemonMoves {
+		if j <= 10 {
+			fmt.Printf("	-%s\n", pokemonMoves[i])
+			j++
+		} else {
+			fmt.Print("Would you like to see more moves? (y/n): ")
+			reader := bufio.NewReader(os.Stdin)
+			input, err := reader.ReadString('\n')
+			input = strings.TrimSpace(input)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error reading input:", err)
+				continue
+			}
+			if input == "n" {
+				break
+			} else if input == "y" {
+				j = 0
+			} else {
+				fmt.Println("Incorrect input. Exiting moves")
+			}
 		}
-		fmt.Printf("	-%s\n", move)
 	}
 
 	return nil
